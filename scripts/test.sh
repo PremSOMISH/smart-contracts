@@ -48,6 +48,6 @@ if [ "$SOLIDITY_COVERAGE" = true ]; then
   fi
 else
   echo "Now let's test truffle"
-  node_modules/.bin/truffle test test/01_NXMaster.test.js "$@"
+  node_modules/.bin/truffle deploy "$@"
   node_modules/.bin/truffle test "$@"
 fi
