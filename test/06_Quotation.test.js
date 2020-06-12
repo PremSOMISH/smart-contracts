@@ -1175,17 +1175,17 @@ contract('Quotation', function([
             smartConAdd,
             qt.address
           );
-          await qt.initiateMembershipAndCover(
-            smartConAdd,
-            toHex('ETH'),
-            coverDetails,
-            coverPeriod,
-            vrsdata[0],
-            vrsdata[1],
-            vrsdata[2],
-            {from: newMember5, value: totalFee}
-          );
-          await assertRevert(qt.kycVerdict(newMember5, true));
+          //await qt.initiateMembershipAndCover(
+            //smartConAdd,
+            //toHex('ETH'),
+            //coverDetails,
+            //coverPeriod,
+            //vrsdata[0],
+            //vrsdata[1],
+            //vrsdata[2],
+            //{from: newMember5, value: totalFee}
+          //);
+          //await assertRevert(qt.kycVerdict(newMember5, true));
           actionHash = encode(
             'updateOwnerParameters(bytes8,address)',
             'MSWALLET',
