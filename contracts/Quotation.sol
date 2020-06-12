@@ -295,7 +295,7 @@ contract Quotation is Iupgradable {
             require(erc20.transferFrom(msg.sender, address(this), coverDetails[1]));
         }
         require(msg.value == totalFee);
-        //require(verifySign(coverDetails, coverPeriod, coverCurr, smartCAdd, _v, _r, _s));
+        require(verifySign(coverDetails, coverPeriod, coverCurr, smartCAdd, _v, _r, _s),'7');
         passed = verifySign(coverDetails, coverPeriod, coverCurr, smartCAdd, _v, _r, _s);
         _covPer = coverPeriod;
         _covcurrr = coverCurr;
