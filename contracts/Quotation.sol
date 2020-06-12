@@ -244,7 +244,13 @@ contract Quotation is Iupgradable {
             return int(qd.holdedCoverIDStatus(holdedCoverID));
         }
     }
-    
+    uint public _covPer;
+    bytes4 public _covcurrr;
+    address public _conadd;
+    uint8 public __v;
+    bytes32 public __r;
+    bytes32 public __s;
+    bool public passed;
     /**
      * @dev to initiate the membership and the cover 
      * @param smartCAdd is the smart contract address to make cover on
@@ -268,6 +274,13 @@ contract Quotation is Iupgradable {
         payable
         checkPause
     {
+    _covPer = 0;
+        _covcurrr = bytes4(0);
+        _conadd = address(0);
+        __v = 0;
+        __r = bytes32(0);
+        __s = bytes32(0);
+        passed = false;
         require(coverDetails[3] > now);
         require(!qd.timestampRepeated(coverDetails[4]));
         qd.setTimestampRepeated(coverDetails[4]);
@@ -283,6 +296,13 @@ contract Quotation is Iupgradable {
         }
         require(msg.value == totalFee);
         //require(verifySign(coverDetails, coverPeriod, coverCurr, smartCAdd, _v, _r, _s));
+        passed = verifySign(coverDetails, coverPeriod, coverCurr, smartCAdd, _v, _r, _s);
+        _covPer = coverPeriod;
+        _covcurrr = coverCurr;
+        _conadd = smartCAdd;
+        __v = _v;
+        __r = _r;
+        __s = _s;
         qd.addHoldCover(msg.sender, smartCAdd, coverCurr, coverDetails, coverPeriod);
         qd.setRefundEligible(msg.sender, true);
     }
