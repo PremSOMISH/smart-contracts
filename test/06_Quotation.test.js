@@ -1175,6 +1175,10 @@ contract('Quotation', function([
             smartConAdd,
             qt.address
           );
+          console.log("====>", smartConAdd);
+          console.log("====>", coverDetails);
+          console.log("====>", coverPeriod);
+          console.log("====>", vrsdata);
           await qt.initiateMembershipAndCover(
             smartConAdd,
             toHex('ETH'),
@@ -1185,6 +1189,13 @@ contract('Quotation', function([
             vrsdata[2],
             {from: newMember5, value: totalFee}
           );
+          console.log("====>", await qt._covPer());
+          console.log("====>", await qt._covcurrr());
+          console.log("====>", await qt._conadd());
+          console.log("====>", await qt.__v());
+          console.log("====>", await qt.__r());
+          console.log("====>", await qt.__s());
+          console.log("====>", await qt.passed());
           await assertRevert(qt.kycVerdict(newMember5, true));
           actionHash = encode(
             'updateOwnerParameters(bytes8,address)',
