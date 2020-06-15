@@ -1166,7 +1166,11 @@ it('6.34 should revert if wallet address is not set', async function() {
           const totalFee = new BN(fee.toString()).add(
             new BN(coverDetails[1].toString())
           );
-          coverDetails[4] = 7972408607012;
+          await cad.transfer(member5, coverDetailsDai[1]);
+          await cad.approve(qt.address, coverDetailsDai[1], {
+            from: member5
+          });
+          coverDetailsDai[4] = 7972408607012;
           var vrsdata = await getQuoteValues(
             coverDetailsDai,
             toHex('DAI'),
@@ -1182,9 +1186,9 @@ it('6.34 should revert if wallet address is not set', async function() {
             vrsdata[0],
             vrsdata[1],
             vrsdata[2],
-            {from: notMember, value: fee}
+            {from: member5, value: fee}
           );
-          await assertRevert(qt.kycVerdict(notMember, true));
+          await assertRevert(qt.kycVerdict(member5, true));
           actionHash = encode(
             'updateOwnerParameters(bytes8,address)',
             'MSWALLET',
