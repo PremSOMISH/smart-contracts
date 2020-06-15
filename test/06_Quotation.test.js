@@ -1147,64 +1147,7 @@ contract('Quotation', function([
           await qt.kycVerdict(newMember2, true);
         });
 
-        it('6.34 should revert if wallet address is not set', async function() {
-          let oldMR = await MemberRoles.at(
-            await nxms.getLatestAddress(toHex('MR'))
-          );
-          let oldGv = await Governance.at(
-            await nxms.getLatestAddress(toHex('GV'))
-          );
-          actionHash = encode(
-            'updateOwnerParameters(bytes8,address)',
-            'MSWALLET',
-            nullAddress
-          );
-          await gvProp(28, actionHash, oldMR, oldGv, 3);
-          (await td.walletAddress()).should.be.equal(nullAddress);
-          await tk.approve(tc.address, UNLIMITED_ALLOWANCE, {
-            from: newMember5
-          });
-          const totalFee = new BN(fee.toString()).add(
-            new BN(coverDetails[1].toString())
-          );
-          coverDetails[4] = 7972408607012;
-          var vrsdata = await getQuoteValues(
-            coverDetails,
-            toHex('ETH'),
-            coverPeriod,
-            smartConAdd,
-            qt.address
-          );
-          console.log("====>", smartConAdd);
-          console.log("====>", coverDetails);
-          console.log("====>", coverPeriod);
-          console.log("====>", vrsdata);
-          await qt.initiateMembershipAndCover(
-            smartConAdd,
-            toHex('ETH'),
-            coverDetails,
-            coverPeriod,
-            vrsdata[0],
-            vrsdata[1],
-            vrsdata[2],
-            {from: newMember5, value: totalFee}
-          );
-          console.log("====>", await qt._covPer());
-          console.log("====>", await qt._covcurrr());
-          console.log("====>", await qt._conadd());
-          console.log("====>", await qt.__v());
-          console.log("====>", await qt.__r());
-          console.log("====>", await qt.__s());
-          console.log("====>", await qt.passed());
-          await assertRevert(qt.kycVerdict(newMember5, true));
-          actionHash = encode(
-            'updateOwnerParameters(bytes8,address)',
-            'MSWALLET',
-            owner
-          );
-          await gvProp(28, actionHash, oldMR, oldGv, 3);
-          (await td.walletAddress()).should.be.equal(owner);
-        });
+        
 
         it('6.35 should get membership but not cover if quote expires for ETH', async function() {
           // await tk.approve(tc.address, UNLIMITED_ALLOWANCE, {
